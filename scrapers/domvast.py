@@ -16,7 +16,7 @@ class Domvast(Scraper):
 
         for house_object in objects:
             address = house_object.find('span', {'class', 'adres'})
-            plaatsnaam = house_object.find('span', {'class', 'plaatsnaam'})
+            city = house_object.find('span', {'class', 'plaatsnaam'})
             link = house_object.find('a', {'class', 'adreslink'})
             price = house_object.find('span', {'class', 'element_prijs2'})
             image = house_object.find('img', {'class', 'img-responsive'})
@@ -25,8 +25,6 @@ class Domvast(Scraper):
 
             if size is not None:
                 size = size.parent.findNext('div').string
-                if size is not None:
-                    size = [int(s) for s in size.split() if s.isdigit()]
 
             status = house_object.find('div', {'class', 'status'})
 
@@ -34,16 +32,22 @@ class Domvast(Scraper):
             if status is not None:
                 continue
 
+            if city is None or city.string.strip() != 'Utrecht':
+                continue
+
             if price is not None:
-                price = [int(s) for s in price.string.split() if s.isdigit()]
+                price = price.string
 
             if image is not None:
                 image = image['src']
 
+            if link is not None:
+                link = link['href']
+
             house = House(
-                city=plaatsnaam.string,
+                city=city.string,
                 address=address.string,
-                link=link.string,
+                link=link,
                 price=price,
                 image=image,
                 size=size

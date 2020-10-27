@@ -36,8 +36,7 @@ if __name__ == '__main__':
     starttime = time.time()
     print('Started at: ', starttime)
 
-    # interval = 15.0 * 60.0
-    interval = 10
+    interval = 15.0 * 60.0
     print('Checking every ' + str(interval) + ' seconds')
 
     while True:
@@ -49,7 +48,8 @@ if __name__ == '__main__':
             for address in new_houses:
                 if address not in houses:
                     print('Found new house: ' + address)
-                    houses[address] = new_houses[address]
-                    notify(address)
+                    house = new_houses[address]
+                    houses[address] = house
+                    notify(house.toMarkdown())
 
         time.sleep(interval - ((time.time() - starttime) % interval))

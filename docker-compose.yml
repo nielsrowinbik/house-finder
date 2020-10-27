@@ -15,16 +15,15 @@ services:
             - PASS=${NORD_VPN_PASSWORD}
             - CONNECT=${NORD_VPN_COUNTRY}
             - TECHNOLOGY=NordLynx
-            - DEBUG=on
         network_mode: bridge
 
     house_finder:
         container_name: house_finder
         image: python:3.9.0-alpine
-        network_mode: bridge
         working_dir: /app
         command: /bin/sh -c "pip install -r requirements.txt && python -u main.py"
         volumes: 
             - ./:/app
         depends_on:
             - house_finder_vpn
+        network_mode: service:house_finder_vpn

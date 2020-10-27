@@ -33,6 +33,10 @@ if __name__ == '__main__':
         Domvast()
     ]
 
+    ip_response = requests.get('https://ifconfig.me')
+
+    print('IP is: ' + ip_response.text)
+
     starttime = time.time()
     print('Started at: ', starttime)
 

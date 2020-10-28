@@ -9,6 +9,9 @@ class House(object):
         self.image = image
         self.size = size
 
+    def __str__(self):
+        return self.address
+
     def toMarkdown(self) -> str:
         return self.escape(f"""
 {self.link}

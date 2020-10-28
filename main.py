@@ -7,6 +7,7 @@ import json
 from dotenv import load_dotenv
 
 from scrapers.domvast import Domvast
+from scrapers.beumerutrecht import BeumerUtrecht
 
 def notify(message: str) -> bool:
     url = 'https://api.telegram.org/bot' + os.getenv('TELEGRAM_API_KEY') + '/sendMessage'
@@ -30,7 +31,8 @@ if __name__ == '__main__':
 
     houses = {}
     sources = [
-        Domvast()
+        Domvast(),
+        BeumerUtrecht()
     ]
 
     ip_response = requests.get('https://ifconfig.me')
@@ -51,8 +53,9 @@ if __name__ == '__main__':
 
             for address in new_houses:
                 if address not in houses:
-                    print('Found new house: ' + address)
                     house = new_houses[address]
+
+                    print('Found new house: ' + str(house))
                     houses[address] = house
                     notify(house.toMarkdown())
 

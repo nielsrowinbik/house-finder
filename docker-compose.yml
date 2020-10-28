@@ -2,7 +2,7 @@ version: "3"
 services:
     house_finder_vpn:
         container_name: house_finder_vpn
-        image: bubuntux/nordvpn
+        image: bubuntux/nordvpn:3.7.4
         cap_add:
             - NET_ADMIN
             - SYS_MODULE

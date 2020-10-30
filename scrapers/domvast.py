@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 
 from scraper import Scraper
 from house import House
@@ -19,7 +18,6 @@ class Domvast(Scraper):
             city = house_object.find('span', {'class', 'plaatsnaam'})
             link = house_object.find('a', {'class', 'adreslink'})
             price = house_object.find('span', {'class', 'element_prijs2'})
-            image = house_object.find('img', {'class', 'img-responsive'})
             
             size = house_object.find(text='Gebruiksoppervlak wonen')
 
@@ -38,18 +36,13 @@ class Domvast(Scraper):
             if price is not None:
                 price = price.string
 
-            if image is not None:
-                image = image['src']
-
             if link is not None:
                 link = link['href']
 
             house = House(
-                city=city.string,
                 address=address.string,
                 link=link,
                 price=price,
-                image=image,
                 size=size
             )
 
@@ -58,13 +51,10 @@ class Domvast(Scraper):
         return houses
     
     def getIDs(self) -> list[str]:
-        min = os.getenv('PRICE_MIN')
-        max = os.getenv('PRICE_MAX')
-
         url = 'https://www.domvast.nl/huizen/smartselect.aspx'
         data = {
             'sorteer': 'Desc~Datum,Asc~Prijs',
-            'prijs': str(min) + ',' + str(max),
+            'prijs': str(150000) + ',' + str(320000),
             'prefilter': 'Koopaanbod',
             'pagenum': '0',
             'pagerows': '1000',

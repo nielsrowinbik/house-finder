@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 import re
 
 from scraper import Scraper
@@ -19,20 +18,14 @@ class BeumerUtrecht(Scraper):
         for entry in data:
             if entry['c'] == 'Beschikbaar':
                 houses[entry['d']] = House(
-                    city=entry['e'],
                     address=entry['d'],
                     link=self.url + entry['a'],
-                    price=entry['g'],
-                    image=None,
-                    size='?'
+                    price=entry['g'].replace('&euro;', '€'),
                 )
 
         return houses
 
     def getPostData(self):
-        min = os.getenv('PRICE_MIN')
-        max = os.getenv('PRICE_MAX')
-
         return {
             '__live': '1',
             '__templates[]': ['search', 'loop'],
@@ -42,10 +35,8 @@ class BeumerUtrecht(Scraper):
             'plaats_postcode': 'Utrecht',
             'radiuscustom': '',
             'typewoning': '',
-            'prijs': {
-                'min': min, 
-                'max': max,
-            },
+            'prijs[min]': '150000',
+            'prijs[max]': '350000',
             'status[]': None,
             'woningsoort[]': None,
             'liggingen[]': None,

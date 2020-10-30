@@ -1,12 +1,10 @@
 import re
 
 class House(object):
-    def __init__(self, city, address, link, price, image, size):
-        self.city = city
+    def __init__(self, address, link, price, size = '? m²'):
         self.address = address
         self.link = link
         self.price = price
-        self.image = image
         self.size = size
 
     def __str__(self):

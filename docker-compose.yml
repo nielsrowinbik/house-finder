@@ -16,6 +16,7 @@ services:
             - CONNECT=${NORD_VPN_COUNTRY}
             - TECHNOLOGY=NordLynx
         network_mode: bridge
+        restart: unless-stopped
 
     house_finder:
         container_name: house_finder
@@ -27,3 +28,4 @@ services:
         depends_on:
             - house_finder_vpn
         network_mode: service:house_finder_vpn
+        restart: unless-stopped

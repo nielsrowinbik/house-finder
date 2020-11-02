@@ -11,6 +11,7 @@ from scrapers.domvast import Domvast
 from scrapers.beumerutrecht import BeumerUtrecht
 from scrapers.rvl import RVL
 from scrapers.vandoorn import VanDoorn
+from scrapers.molenbeek import Molenbeek
 
 def notify(message: str) -> bool:
     url = 'https://api.telegram.org/bot' + os.getenv('TELEGRAM_API_KEY') + '/sendMessage'
@@ -39,7 +40,8 @@ def loop():
             Domvast(),
             BeumerUtrecht(),
             RVL(),
-            VanDoorn()
+            VanDoorn(),
+            Molenbeek(),
         ]
 
         ip_response = requests.get('https://ifconfig.me')

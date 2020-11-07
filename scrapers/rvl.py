@@ -5,8 +5,8 @@ from house import House
 from bs4 import BeautifulSoup
 
 class RVL(Scraper):
-    def getHouses(self) -> dict[House]:
-        houses = {}
+    def getHouses(self) -> list[House]:
+        houses = []
 
         html = requests.get('https://www.rvlmakelaars.nl/koopwoningen-utrecht?a=Utrecht&m=158000&e=329000&sb=latest').text
 
@@ -22,14 +22,14 @@ class RVL(Scraper):
             if '€' not in price:
                 continue
 
-            address_span = house_div.find('span', {'class': 'p-name'})
+            address_span = house_div.find('span', class_='p-name')
 
-            house = House(
-                address=address_span.string,
-                link=house_div.a['href'],
-                price=price
+            houses.append(
+                House(
+                    address=address_span.text.splitlines()[1].strip(),
+                    link=house_div.a['href'],
+                    price=price.strip()
+                )
             )
-            
-            houses[house.address] = house
 
         return houses

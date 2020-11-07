@@ -6,8 +6,8 @@ from house import House
 from bs4 import BeautifulSoup
 
 class Domvast(Scraper):
-    def getHouses(self) -> dict[House]:
-        houses = {}
+    def getHouses(self) -> list[House]:
+        houses = []
 
         soup = BeautifulSoup(self.getHTML(), 'html.parser')
 
@@ -39,14 +39,14 @@ class Domvast(Scraper):
             if link is not None:
                 link = link['href']
 
-            house = House(
-                address=address.string,
-                link=link,
-                price=price,
-                size=size
+            houses.append(
+                House(
+                    address=address.string,
+                    link=link,
+                    price=price,
+                    size=size
+                )
             )
-
-            houses[house.address] = house
 
         return houses
     

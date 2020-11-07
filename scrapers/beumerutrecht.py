@@ -8,8 +8,8 @@ from house import House
 class BeumerUtrecht(Scraper):
     url = 'https://beumerutrecht.nl/woningen/'
 
-    def getHouses(self) -> dict[House]:
-        houses = {}
+    def getHouses(self) -> list[House]:
+        houses = []
 
         response = requests.post(self.url, data=self.getPostData())
 
@@ -17,10 +17,13 @@ class BeumerUtrecht(Scraper):
 
         for entry in data:
             if entry['c'] == 'Beschikbaar':
-                houses[entry['d']] = House(
-                    address=entry['d'],
-                    link=self.url + entry['a'],
-                    price=entry['g'].replace('&euro;', '€'),
+
+                houses.append(
+                    House(
+                        address=entry['d'],
+                        link=self.url + entry['a'],
+                        price=entry['g'].replace('&euro;', '€'),
+                    )
                 )
 
         return houses

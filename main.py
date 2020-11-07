@@ -10,8 +10,11 @@ from tinydb import TinyDB, where
 from scrapers.domvast import Domvast
 from scrapers.beumerutrecht import BeumerUtrecht
 from scrapers.rvl import RVL
-from scrapers.vandoorn import VanDoorn
 from scrapers.molenbeek import Molenbeek
+from scrapers.makelaar1 import Makelaar1
+from scrapers.lauteslager import Lauteslager
+
+from scrapers.realworks import createRealworksInstances
 
 def notify(message: str) -> bool:
     url = 'https://api.telegram.org/bot' + os.getenv('TELEGRAM_API_KEY') + '/sendMessage'
@@ -35,14 +38,19 @@ def notify(message: str) -> bool:
     return result
 
 def loop():
+    print('')
+
     try:
         sources = [
             Domvast(),
             BeumerUtrecht(),
             RVL(),
-            VanDoorn(),
             Molenbeek(),
+            Makelaar1(),
+            Lauteslager(),
         ]
+
+        sources.extend(createRealworksInstances())
 
         ip_response = requests.get('https://ifconfig.me')
 
@@ -51,24 +59,31 @@ def loop():
         db = TinyDB('db.json')
 
         for source in sources:
-            print('Searching in ' + source.__class__.__name__)
+            print('Searching in ' + source.getName())
 
             new_houses = source.getHouses()
 
             if len(new_houses) == 0:
-                print('No houses found :(')
+                print('    No houses found :(')
 
-            for address in new_houses:
-                if db.contains(where('address') == address):
-                    print('Found existing house: ' + address)
+            for house in new_houses:
+                if house.address is None:
+                    print('    House parsing failed!')
+                    notify('    House parsing failed!')
+                    continue
+
+                if db.contains(where('address') == house.address):
+                    print('    Found existing house: ' + house.address)
                 else:
-                    house = new_houses[address]
-
-                    print('Found new house: ' + address)
-                    db.insert({'address': address})
+                    print('    Found new house: ' + house.address)
+                    db.insert({'address': house.address})
                     notify(house.toMarkdown())
     except Exception as e:
-        print(e)
+        print('    ' + str(e))
+        notify(str(e))
+
+    print('Done for now :D')
+    print('')
 
 if __name__ == '__main__':
     load_dotenv()

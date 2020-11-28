@@ -13,6 +13,8 @@ from scrapers.rvl import RVL
 from scrapers.molenbeek import Molenbeek
 from scrapers.makelaar1 import Makelaar1
 from scrapers.lauteslager import Lauteslager
+from scrapers.punt import Punt
+from scrapers.debree import DeBree
 
 from scrapers.realworks import createRealworksInstances
 
@@ -48,6 +50,8 @@ def loop():
             Molenbeek(),
             Makelaar1(),
             Lauteslager(),
+            Punt(),
+            DeBree,
         ]
 
         sources.extend(createRealworksInstances())
@@ -87,6 +91,9 @@ def loop():
 
 if __name__ == '__main__':
     load_dotenv()
+
+    print('Waiting a few seconds for the VPN to start...')
+    time.sleep(5)
 
     starttime = time.time()
     print('Started at: ', starttime)

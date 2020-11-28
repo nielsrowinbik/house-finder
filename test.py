@@ -4,16 +4,19 @@ from scrapers.rvl import RVL
 from scrapers.molenbeek import Molenbeek
 from scrapers.makelaar1 import Makelaar1
 from scrapers.lauteslager import Lauteslager
+from scrapers.punt import Punt
+from scrapers.debree import DeBree
 
-from scrapers.realworks import createRealworksInstances
+from scrapers.realworks import createRealworksInstances, Realworks
 
 if __name__ == "__main__":
     pass
     # print(createRealworksInstances())
-    # sources = [
-    #     Quist()
-    # ]
+    sources = [
+        # Realworks(name="brecheisen", url="https://www.brecheisen.nl")
+        DeBree()
+    ]
 
-    # for source in sources:
-    #     for house in source.getHouses():
-    #         print(house.toMarkdown())
+    for source in sources:
+        for house in source.getHouses():
+            print(house.toMarkdown())

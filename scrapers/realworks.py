@@ -46,7 +46,12 @@ class Realworks(Scraper):
             price_span = price_span.find('span', class_='kenmerkValue')
 
             size_span = house_li.find('span', class_='woonoppervlakte')
-            size_span = size_span.find('span', class_='kenmerkValue')
+
+            size_text = '? m²'
+
+            if size_span is not None:
+                size_span = size_span.find('span', class_='kenmerkValue')
+                size_text = size_span.string.strip()
 
             link_a = house_li.find('a', class_='aanbodEntryLink')
 
@@ -55,7 +60,7 @@ class Realworks(Scraper):
                     address=address_span.string,
                     link=self.url + link_a['href'],
                     price=price_span.string.strip(),
-                    size=size_span.string.strip()
+                    size=size_text
                 )
             )
 

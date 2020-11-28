@@ -24,3 +24,5 @@ VanRossum https://www.vanrossummakelaars.nl
 Nijland https://www.nijland.nl
 ViaMakelaardij https://www.viamakelaardij.nl
 JVDL https://www.jvdlmakelaardij.nl
+Brecheisen https://www.brecheisen.nl
+LeefEnGeniet https://www.leefengeniet.nl

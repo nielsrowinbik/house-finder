@@ -14,9 +14,10 @@ if __name__ == "__main__":
     # print(createRealworksInstances())
     sources = [
         # Realworks(name="brecheisen", url="https://www.brecheisen.nl")
-        DeBree()
+        Lauteslager()
     ]
 
     for source in sources:
+        print(source.getName())
         for house in source.getHouses():
             print(house.toMarkdown())

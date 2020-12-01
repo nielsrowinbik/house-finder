@@ -42,27 +42,27 @@ def notify(message: str) -> bool:
 def loop():
     print('')
 
-    try:
-        sources = [
-            Domvast(),
-            BeumerUtrecht(),
-            RVL(),
-            Molenbeek(),
-            Makelaar1(),
-            Lauteslager(),
-            Punt(),
-            DeBree,
-        ]
+    sources = [
+        Domvast(),
+        BeumerUtrecht(),
+        RVL(),
+        Molenbeek(),
+        Makelaar1(),
+        Lauteslager(),
+        Punt(),
+        DeBree(),
+    ]
 
-        sources.extend(createRealworksInstances())
+    sources.extend(createRealworksInstances())
 
-        ip_response = requests.get('https://ifconfig.me')
+    ip_response = requests.get('https://ifconfig.me')
 
-        print('Searching the interwebs with IP: ' + ip_response.text)
+    print('Searching the interwebs with IP: ' + ip_response.text)
 
-        db = TinyDB('db.json')
+    db = TinyDB('db.json')
 
-        for source in sources:
+    for source in sources:
+        try:
             print('Searching in ' + source.getName())
 
             new_houses = source.getHouses()
@@ -82,9 +82,9 @@ def loop():
                     print('    Found new house: ' + house.address)
                     db.insert({'address': house.address})
                     notify(house.toMarkdown())
-    except Exception as e:
-        print('    ' + str(e))
-        notify(str(e))
+        except Exception as e:
+            print('    ' + str(e))
+            notify('Error in housefinder D:')
 
     print('Done for now :D')
     print('')

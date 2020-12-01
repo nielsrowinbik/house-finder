@@ -15,11 +15,12 @@ class Lauteslager(Scraper):
 
         page_select_div = soup.find('div', class_='pagination')
 
-        last_page = None
-        for option in page_select_div.find_all('a'):
-            if option.text != '':
-                last_page = option.text
-    
+        last_page = 1
+
+        if page_select_div is not None:
+            for option in page_select_div.find_all('a'):
+                if option.text != '':
+                    last_page = option.text
 
         for page in range(1, int(last_page) + 1):
             html = requests.get(self.getUrl(page)).text

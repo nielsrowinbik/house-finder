@@ -4,6 +4,7 @@ import requests
 import os
 import json
 
+from datetime import datetime
 from dotenv import load_dotenv
 from tinydb import TinyDB, where
 
@@ -57,7 +58,7 @@ def loop():
 
     ip_response = requests.get('https://ifconfig.me')
 
-    print('Searching the interwebs with IP: ' + ip_response.text)
+    print('Searching the interwebs at ' + datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + ' with IP: ' + ip_response.text)
 
     db = TinyDB('db.json')
 

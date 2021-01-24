@@ -1,31 +1,32 @@
-version: "3"
-services:
-    house_finder_vpn:
-        container_name: house_finder_vpn
-        image: bubuntux/nordvpn:3.7.4
-        cap_add:
-            - NET_ADMIN
-            - SYS_MODULE
-        sysctls:
-            - net.ipv4.conf.all.rp_filter=2
-        devices:
-            - /dev/net/tun
-        environment:
-            - USER=${NORD_VPN_USER}
-            - PASS=${NORD_VPN_PASSWORD}
-            - CONNECT=${NORD_VPN_COUNTRY}
-            - TECHNOLOGY=NordLynx
-        network_mode: bridge
-        restart: unless-stopped
+version: "3.8"
 
-    house_finder:
-        container_name: house_finder
-        image: python:3.9.0-alpine
-        working_dir: /app
-        command: /bin/sh -c "pip install -r requirements.txt && python -u main.py"
-        volumes: 
-            - ./:/app
-        depends_on:
-            - house_finder_vpn
-        network_mode: service:house_finder_vpn
-        restart: unless-stopped
+services:
+
+  house_finder_vpn:
+    container_name: house_finder_vpn
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun
+    environment:
+      - KILL_SWITCH=true
+    image: yacht7/openvpn-client
+    network_mode: bridge
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.all.rp_filter=2
+    volumes:
+      - ./openvpn:/data/vpn
+
+  house_finder:
+    command: /bin/sh -c "pip install -r requirements.txt && python -u main.py"
+    container_name: house_finder
+    depends_on:
+      - house_finder_vpn
+    image: python:3.9.0-alpine
+    working_dir: /app
+    network_mode: service:house_finder_vpn
+    restart: unless-stopped
+    volumes: 
+      - ./:/app

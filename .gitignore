@@ -133,3 +133,6 @@ dmypy.json
 
 # DB
 db.json
+
+# OpenVPN configuration
+/openvpn

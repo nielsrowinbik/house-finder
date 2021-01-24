@@ -28,7 +28,7 @@ class Realworks(Scraper):
 
         houses = []
 
-        html = requests.get(self.url + '/aanbod/woningaanbod/UTRECHT/150000-325000/koop/aantal-80/').text
+        html = requests.get(self.url + '/aanbod/woningaanbod/UTRECHT/' + os.getenv('PRICE_MIN') + '-' + os.getenv('PRICE_MAX') + '/koop/aantal-80/').text
 
         soup = BeautifulSoup(html, 'html.parser')
 

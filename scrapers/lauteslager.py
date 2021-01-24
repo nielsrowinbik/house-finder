@@ -50,4 +50,4 @@ class Lauteslager(Scraper):
         return houses
 
     def getUrl(self, page):
-        return 'https://www.lauteslager.nl/nl/aanbod/page/' + str(page) + '/?type=koop&plaats=utrecht&s&prijs_test[min]=150000&prijs_test[max]=350000&aantalKamers[0]&woonoppervlakte[0]'
+        return 'https://www.lauteslager.nl/nl/aanbod/page/' + str(page) + '/?type=koop&plaats=utrecht&s&prijs_test[min]=150000&prijs_test[max]=350000&aantalKamers[0]&woonoppervlakte[0]' # TODO: Figure out a way to select correct range based on environment variables

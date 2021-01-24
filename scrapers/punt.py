@@ -11,7 +11,7 @@ class Punt(Scraper):
     def getHouses(self) -> list[House]:
         houses = []
 
-        html = requests.get(self.url + '/nl/aanbod/kantoor-utrecht/?q=&prijs=200000-250000&prijs=250000-300000&prijs=300000-350000').text
+        html = requests.get(self.url + '/nl/aanbod/kantoor-utrecht/?q=&prijs=200000-250000&prijs=250000-300000&prijs=300000-350000').text # TODO: Figure out a way to select correct range based on environment variables
 
         soup = BeautifulSoup(html, 'html.parser')
 

@@ -22,7 +22,7 @@ class Molenbeek(Scraper):
             if entry['place'] != 'Utrecht':
                 continue
 
-            if (entry['buy_price'] == None) or not (150000 <= entry['buy_price'] < 325000):
+            if (entry['buy_price'] == None) or not (int(os.getenv('PRICE_MIN')) <= entry['buy_price'] < int(os.getenv('PRICE_MAX'))):
                 continue
 
             houses.append(

@@ -31,7 +31,7 @@ class DeBree(Scraper):
 
             price = int(price_div.text.replace('€', '').replace(' ', '').replace('.', ''))
 
-            if not (225000 <= price <= 325000):
+            if not (int(os.getenv('PRICE_MIN')) <= price <= int(os.getenv('PRICE_MAX'))):
                 continue
 
             link_a = house_div.find('a')

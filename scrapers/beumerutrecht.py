@@ -38,8 +38,8 @@ class BeumerUtrecht(Scraper):
             'plaats_postcode': 'Utrecht',
             'radiuscustom': '',
             'typewoning': '',
-            'prijs[min]': '150000',
-            'prijs[max]': '350000',
+            'prijs[min]': '150000', # TODO: Figure out a way to select correct range based on environment variables
+            'prijs[max]': '350000', # TODO: Figure out a way to select correct range based on environment variables
             'status[]': None,
             'woningsoort[]': None,
             'liggingen[]': None,

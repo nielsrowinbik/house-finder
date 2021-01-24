@@ -54,7 +54,7 @@ class Domvast(Scraper):
         url = 'https://www.domvast.nl/huizen/smartselect.aspx'
         data = {
             'sorteer': 'Desc~Datum,Asc~Prijs',
-            'prijs': str(150000) + ',' + str(320000),
+            'prijs': os.getenv('PRICE_MIN') + ',' + os.getenv('PRICE_MAX'),
             'prefilter': 'Koopaanbod',
             'pagenum': '0',
             'pagerows': '1000',

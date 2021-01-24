@@ -6,7 +6,7 @@ from house import House
 from bs4 import BeautifulSoup
 
 class Makelaar1(Scraper):
-    url = 'https://www.makelaar1.nl/?minvraagprijs=150000&maxvraagprijs=325000&plaats=utrecht&keuze=zoeken&straalkm=10&typeobject=koop'
+    url = 'https://www.makelaar1.nl/?minvraagprijs=150000&maxvraagprijs=325000&plaats=utrecht&keuze=zoeken&straalkm=10&typeobject=koop' # TODO: Figure out a way to select correct range based on environment variables
 
     def getHouses(self) -> list[House]:
         houses = []

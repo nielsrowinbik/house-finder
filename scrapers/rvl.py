@@ -8,7 +8,7 @@ class RVL(Scraper):
     def getHouses(self) -> list[House]:
         houses = []
 
-        html = requests.get('https://www.rvlmakelaars.nl/koopwoningen-utrecht?a=Utrecht&m=158000&e=329000&sb=latest').text
+        html = requests.get('https://www.rvlmakelaars.nl/koopwoningen-utrecht?a=Utrecht&m=' + os.getenv('PRICE_MIN') + '&e=' + os.getenv('PRICE_MAX') + '&sb=latest').text
 
         soup = BeautifulSoup(html, 'html.parser')
 
